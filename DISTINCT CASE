@@ -1,0 +1,29 @@
+#This returns the text and the count of distinct user ids for each ab_group. 
+
+SELECT modal_text,
+  COUNT(DISTINCT CASE
+    WHEN ab_group = 'control' THEN user_id
+    END) AS 'control_clicks',
+  COUNT( DISTINCT CASE 
+    WHEN ab_group = 'variant' THEN user_id
+    END) AS 'variant_clicks'
+FROM onboarding_modals
+GROUP BY 1
+ORDER BY 1;
+
+Query Results
+modal_text	                                        control_clicks	                       variant_clicks
+1 - Welcome to Mattresses and More!	                    500                                   500
+2 - Browse our bedding selection	                      301	                                  394
+3 - Select items to add to your card	                  239	                                  336
+4 - View your cart by clicking on the icon	            183                                 	264
+5 - Press 'Buy Now!' when you're ready to checkout     	152	                                  227
+
+
+Database Schema
+onboarding_modals
+name	type
+user_id	TEXT
+modal_text	TEXT
+user_action	TEXT
+ab_group	TEXT
